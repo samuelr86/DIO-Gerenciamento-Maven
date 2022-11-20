@@ -53,6 +53,12 @@ C:\>projetos\mvn package
 ```bash
 C:\>projetos\mvn clean
 ```
+<li>Instalar dependências: install, public um componente e disponibiliza no repositório local para reuso em outras aplicações</li>
+
+```bash
+C:\>projetos\mvn install
+```
+
 <h3><em>Criando diferente tipos de projeto</em></h3>
 
 <h4>Como?</h4>
@@ -89,7 +95,7 @@ C:\>projetos\mvn clean
 
 <p>O maven trabalha com conceito de herança, por exemplo se voce passar o pom com apenas essas configurações ele vai extender de um superPOM as configurações que necessita.</p>
 
-<h3>Repositórios</h3>
+<h3><em>Repositórios</em></h3>
 <p>São locais onde podemso encontrar plugins e bibliotecas que o Maven provê. Há dois tipos: o local e o remoto.</p>
 <li>Repositório Remoto</li>
 <p>É o local central utilizado pelo Maven para buscar os artefatos. Configurado automaticamente pelo super POM para utilizar o Maven Central</p> 
@@ -139,7 +145,7 @@ C:\>projetos\mvn clean
  - repo.maven.apache.org/maven2
  - mvnrepository.com
 
-<h3>Como adicionar dependências ao projeto</h3>
+<h3><em>Como adicionar dependências ao projeto</em></h3>
 <p>Basta ir ao pom.xml e localizar a tag dependecies e adicionar o groupId, o artifactId e o version</p>
 
 ```xml
@@ -158,9 +164,65 @@ C:\>projetos\mvn clean
 <li>version: número da versão que será utilizada</li>
 <p>Adicione a dependência no pom.xml, após ir no terminal e digital o comando 'mvn compile' para baixar a dependência adicionada.</p>
 
-
-
 <h2>Aula 4 - Gerenciamento de Dependencia</h2>
+<h3><em>Tipos de Dependência</em></h3>
+<p>Existem dois tipos de dependências diretas e transitivas. As diretas são as declaradas no pom.xml e as transitivas são as dependências obrigatórias das dependências declaradas no pom.xml .</p>
+<h3><em>Transitividade e Escopos</em></h3>
+<p>Problemas de transitividade é buscar a referencia e inferir uma dependênicia quer queremos e acabar recebendo outras dependências que não iremos utilizar. </p>
+
+<h4>Classpath</h4>
+<li>Runtime: Tempo de execução </li>
+<li>Test: Execução do teste</li>
+<li>Compile: pra compilar a aplicação </li>
+
+<p>É a referência que a aplicação tem para o momento de execução, e o Maven divide em 3 parte:</p>
+<p>Para lidar com esses problemas, o Maven provê escopos para limitar a transitividade das dependências. Deve ser declarado dentro da tag dependency</p>.
+
+```xml
+<dependency>
+	<scope>default</scope>
+</dependency>
+```
+
+<p>Existem 6 tipos que podemos utilizar:</p>
+<ol>
+	<li>Escopo default: é uma dependência transitiva e está disponível em todos os classpaths </li>
+	<li>Espoco provided: é uma dependência não transitiva e indica que será fornecida em tempo de execução por uma implementação na JDK ou via container. A dependência com esse escopo é adicionado no classpath <em>Compile</em> e no <em>Test</em> mas não em <em>Runtime</em>.</li>
+	<li>Escopo runtime: indica que a dependência é necessária para execução e não para compilação. Maven inclui no classpath dos escopos de <em>Runtime</em> e <em>Test</em>.</li>
+	<li>Escopo test: é uma dependência não transitiva e disponível somente para compilação e execução de testes.</li>
+	<li>Escopo system: é uma dependência não transitiva. Similar ao escopo provided exceto por ser necessário prover o JAR explicitamente. A dependência com esse escopo é adicionado no classpath usado para <em>Compile</em> e no <em>Test</em> mas não em <em>Runtime</em>.</li>
+	<li>Escopo import: Este escopo é disponível apenas com uma dependência do tipo pom e com tag 'dependencyManagement', permite importar dependências de outro projeto.</li>
+</ol>
+
+<h3><em>Dicas de escopos, dependências adicionais e exclusions</em></h3>
+</h4>Dicas de escopos</h4>
+<p>Como ver o classpath do meu projeto e ver como o Maven esta construindo cada escopo que existe na minha aplicação:</p>
+
+```bash
+C:\>projetos\mvn dependency:build-classpath -DincludeScope=compile
+C:\>projetos\mvn dependency:build-classpath -DincludeScope=test
+C:\>projetos\mvn dependency:build-classpath -DincludeScope=runtime
+```
+
+<h4>Dependências opcionais</h4>
+<p>Utilizados quando uma dependência não é necessária para os projetos que irão reutilizar seu componente.</p>
+
+```xml
+<dependency>
+	<optional>true</optional>
+</dependency>
+
+```
+<h4>Exclusions</h4>
+<p>Utilizado quando o componente que você usa, compartilha uma biblioteca que você já tem ou não quer ter disponível.</p>
+
+```xml
+<exclusions>
+	<exclusion>
+		<groupId>com.google.code.gson</groupId>
+	</exclusion>
+</exclusions>
+```
 
 <h2>Aula 5 - Maven Build Lifecycle</h2>
 
