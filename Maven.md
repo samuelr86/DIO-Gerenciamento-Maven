@@ -280,4 +280,78 @@ C:\>projetos\mvn dependency:build-classpath -DincludeScope=runtime
 
 <h2>Aula 6 - Multi-módulos</h2>
 
+<h3><em>Projetos multi-módulos</em></h3>
+<p>Vamos supor que uma equipe tem 4 projetos dividos em: core, service, webapp e controller, cada um com um repositório diferente. E esse time está trabalhando numa mesma feature, mas tendo que alterar todos esses projetos. </p>
+<p>Pensando nisso surgiu a idéia de um projeto agregador com todos esse projetos internos, chamados de submódulos.</p>
+<p>Para construir um multi-módulo vamos começar pelo terminal:</p>
+<ol>
+
+<li> Primeramente vamos criar o projeto agregador</li>
+
+```bash
+C:\projetos>mvn archetype:generate -DgroupId=one.digital.innovation -DartifactId=project-parent -Darchetype=maven-quick-start
+```
+<li> Abrir o projeto e fazer um alteração no pom.xml, incluir um packaging para indicar que é do tipo pom</li>
+
+```xml
+//
+
+<groupId>one.digital.innovation</groupId>
+<artifact>project-parent</artifact>
+<version>1.0-SNAPSHOT</version>
+<packaging>pom</packaging>
+
+//
+```
+
+<li> Feito isso, voltamos ao terminal, entramos dentro do diretório do projeto e de lá executamos novamente o mesmo comando, só que agora como cada um dos nosso componentes:</li>
+
+```bash
+C:\projetos\project-parent>mvn archetype:generate -DgroupId=one.digital.innovation -DartifactId=core -Darchetype=maven-quick-start -DinteractiveMode=false
+
+<<com
+echo "enter"
+com
+
+C:\projetos\project-parent>mvn archetype:generate -DgroupId=one.digital.innovation -DartifactId=webapp -Darchetype=maven-quick-start -DinteractiveMode=false
+
+<<com
+echo "enter"
+com
+
+C:\projetos\project-parent>mvn archetype:generate -DgroupId=one.digital.innovation -DartifactId=service -Darchetype=maven-quick-start -DinteractiveMode=false
+
+<<com
+echo "enter"
+com
+
+C:\projetos\project-parent>mvn archetype:generate -DgroupId=one.digital.innovation -DartifactId=controller -Darchetype=maven-quick-start -DinteractiveMode=false
+<<com
+echo "enter"
+com
+
+```
+<li> Abrir o projeto na IDE e verificar que o Maven adicionou os módulos dentro do projeto agregador.</li>
+
+```xml
+<modules>
+	<module>core</module>
+	<module>service</module>
+	<module>controller</module>
+	<module>webapp</module>
+</modules>
+```
+
+<li> E cada módulo tem um parent, que é o "pai", no pom.xml</li>
+
+```xml
+<parent>
+	<groupId>one.digital.innovation</groupId>
+	<artifact>project-parent</artifact>
+	<version>1.0-SNAPSHOT</version>
+</parent>
+```
+
+</ol>
+
 <h2>Aula 7 - Plugins</h2>
