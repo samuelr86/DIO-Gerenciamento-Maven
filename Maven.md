@@ -225,6 +225,58 @@ C:\>projetos\mvn dependency:build-classpath -DincludeScope=runtime
 ```
 
 <h2>Aula 5 - Maven Build Lifecycle</h2>
+<h3><em>O que é?</em></h3>
+
+<h4>Conceito de ciclo de vida de construção</h4>
+	
+
+
+
+<h4>Conceito e os comandos da ferramenta</h4>
+
+<h4>Composto por 3 ciclos de vida</h4>
+
+<h4>Cada ciclo de vida possui fases (Maven Phases)</h4>
+
+<h4>Cada fase possui objetivos (Maven Goals)</h4>
+<ol>
+	<li>Default Lifecycle</li>
+	Principal ciclo<br>
+	Responsável pelo deploy local<br>
+	Composto por 23 fases, sendo as principais:
+		<ul>
+			<li>validate</li>
+			<li>compile</li>
+			<li>test-compile</li>
+			<li>test</li>
+			<li>integration-test</li>
+			<li>package</li>
+			<li>install</li>
+			<li>deploy</li>
+		</ul>	
+	<li>Clean Lifecycle</li>
+	Ciclo intermediário<br>
+	Responsável pela limpeza do projeto<br>
+	Composto por 3 fases:
+		<ul>
+			<li>pre-clean</li>
+			<li>clean</li>
+			<li>post-clean</li>
+		</ul>		
+	<li>Site Lifecycle</li>
+	Ciclo final<br>
+	Responsável pela criação do site de documentação do projeto<br>
+	Composto por 4 fases:
+		<ul>
+			<li>pre-site</li>
+			<li>site</li>
+			<li>post-site</li>
+			<li>site-deploy</li>
+		</ul>
+</ol>
+
+<p>São comandos, existem plugins para entregar a documentação, por exemplo, um projeto escrito em Java, vem com o javadoc, com a documentação toda pronta para entrega.</p>
+
 
 <h2>Aula 6 - Multi-módulos</h2>
 
