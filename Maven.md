@@ -355,3 +355,85 @@ com
 </ol>
 
 <h2>Aula 7 - Plugins</h2>
+
+<h3><em>O que são plugins?</em></h3>
+<p>A maioria das funcionalidades são providas por plugins. É um estilo arquitetural pensado para a extesnsibilidade. Escrito prioritariamente em Java e disponibilizados como JAR's</p>
+
+<p>O Maven é construído dentro de uma arquitetura de plugin, o Apache Maven com principais módulos: complice plugin, clean plugin, test plugin, deploy plugin, jetty plugin, dependency plugin, jboss plugin, surefire plugin e cobertura plugin. </p>
+<p>Plugins mais utilizados: 
+<ul>
+ 	<li>eclipse (voltado para integração IDE Eclipse)</li>
+ 	<li>jacoco (voltado para cobertura de código)</li>
+ 	<li>ear (customização e empacotamento tipo ear)</li>
+ 	<li>war (customização e empacotamento war)</li>
+ 	<li>compile (compilar o projeto)</li>
+ 	<li>clean</li>
+ 	<li>checkstyle (verificar se o código está no estilo que foi configurado)</li>
+ 	<li>javadoc (que é um plugin utilizado para gerar documentação)</li>
+</ul>
+entre outros.</p>
+<p>Para utilizá-lo é muito próximo do que estamos acostumados e usar: </p>
+
+```shell
+C:\projetos>mvn dependency:help
+```
+<p>A configuração do plugin sempre é feita pela tag build, dentro a tag plugins e dentro desta a tag plugin, e a configuração é feita da mesma maneira que uma dependência:</p>
+
+```xml
+<build>
+	<plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.8.0</version>
+			<configuration>
+				<release>11</release>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
+```
+
+<h3><em>Criando um Javadoc</em></h3>
+<p>Dada uma classe:</p>
+
+```java
+/**
+ * Classe que representao usuário
+ */
+
+public class User{
+	private String usename;
+	private Stirng password;
+	private StatusUser status;
+
+	public User(String username, String password){
+		this.username = username;
+		this.password = password;
+	}
+
+	/**
+	 *  Desabilita o usuário informado setando o status DISABLED
+	 */
+	public void disable(){ this.status = StatusUser.DISABLED; }
+}
+```
+
+<p>Vamos até o pom e configuramos o plugin:</p>
+
+```xml
+<plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-javadoc-plugin</artifactId>
+	<version>3.3.1</version>
+</plugin>
+```
+<p>Vamos até o terminal e executarmos o plugin javadoc:</p>
+
+```shell
+C:\projetos>mvn javadoc:javadoc
+```
+
+<p>Essa documentação é gerada na pasta target no projeto. O arquivo index tem toda a documentação gerada a respeito da classe.</p>
+
+
